@@ -62,11 +62,15 @@
             errorOfficer: false,
             errorManager: false,
             errorActiveDt: false,
-            errorSylbFile: false
+            errorSylbFile: false,
+            errorPlanFile: false
         };
                
 
         $scope.clearSyllabusForm = function () {
+            $scope.newSyllabus = {};
+            $scope.selectedTrade = null;
+            $scope.selectedLevel = null;
             $scope.states.errorTradeId = false;
             $scope.states.errorLevelId = false;
             $scope.states.errorLanguages = false;
@@ -75,6 +79,7 @@
             $scope.states.errorManager = false;
             $scope.states.errorActiveDt = false;
             $scope.states.errorSylbFile = false;
+            $scope.states.errorPlanFile = false;
             $scope.sylbfile = null;
             $scope.sylbfilename = '';
             $scope.sylbfileMessage = 'File extension should be .pdf, .doc, .docx, .xls, .jpg, .png or .jpeg';
@@ -82,9 +87,6 @@
             $scope.planfilename = '';
             $scope.planfileMessage = 'File extension should be .pdf, .doc, .docx, .xls, .jpg, .png or .jpeg';
             angular.element("input[type='file']").val(null);
-
-           
-           
         };
 
         
@@ -100,6 +102,7 @@
             $scope.errorLanguages(len);
         };
 
+       
         //file 
         $scope.setSylbFile = function (element) {
             $scope.$apply(function ($scope) {
@@ -162,7 +165,7 @@
                     $scope.sylbfileMessage = '';
                 }
                 else {
-                    $scop.planfileMessage = '';
+                    $scope.planfileMessage = '';
                 }
                 
             }
@@ -273,7 +276,12 @@
 
        
         
-        $scope.saveSyllabus = function () {            
+        $scope.saveSyllabus = function () {
+
+            var date = new Date();
+            $scope.today = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+
+
             
             var trd = $scope.errorTradeChange($scope.selectedTrade);
             var lvl = $scope.errorLevelChange($scope.selectedLevel);
@@ -291,9 +299,10 @@
                 $scope.newSyllabus.SyllabusId = 0;
                 $scope.newSyllabus.UploadBy = 1;
                 $scope.newSyllabus.TradeId = $scope.selectedTrade.TradeId;
-                $scope.newSyllabus.LevelId = $scope.selectedLevel.LevelId;
-                
-                $scope.newSyllabus.SyllabusFileName = $scope.sylbfilename;
+                $scope.newSyllabus.LevelId = $scope.selectedLevel.LevelId;                
+                $scope.newSyllabus.SyllabusDocUrl = $scope.sylbfilename;
+                $scope.newSyllabus.TestPlanUrl = $scope.planfilename;
+                $scope.newSyllabus.UploadDt = $scope.today;
 
                 $scope.newSyllabus.states = Math.floor(Math.random() * (1 - 0 + 1) + 0);
 

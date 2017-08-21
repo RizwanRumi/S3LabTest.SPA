@@ -35,11 +35,7 @@
                         <label for="{{lang.LanguageName}}">{{lang.LanguageName}}</label>
                         &nbsp;
                     </span>
-
-                    <span ng-repeat="val in selectedLangList">
-                        <div>{{val}}</div>
-                    </span>
-                    
+                                        
                     <div class="text-danger" ng-if="states.errorLanguages">Minimum one language required.</div>
                 </div>               
             </div>
@@ -52,7 +48,7 @@
         <div class="col-md-7">
             <div class="form-group">
                 <label>Syllabus Name</label>
-                <input type="text" class="form-control" ng-model="newSyllabus.SyllabusName" ng-keyup="errorSylbNameChange(newSyllabus.SyllabusName)" required="required">
+                <input type="text" class="form-control" maxlength="25" ng-model="newSyllabus.SyllabusName" ng-keyup="errorSylbNameChange(newSyllabus.SyllabusName)" required="required">
                 <div class="text-danger" ng-if="states.errorSylbName">Please field required.</div>
             </div>
         </div>                 
