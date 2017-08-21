@@ -27,6 +27,10 @@
         $scope.selectedTrade = null;
         $scope.selectedLevel = null;
 
+        $scope.sylbfile = null;
+        $scope.sylbfilename = '';
+        $scope.sylbfileMessage = 'File extension should be .pdf, .doc, .docx, .xls, .jpg, .png or .jpeg';
+
         //    $scope.active = function () {
 
         tradeService.getTrades()
@@ -53,7 +57,8 @@
             errorSylbName: false,
             errorOfficer: false,
             errorManager: false,
-            errorActiveDt: false
+            errorActiveDt: false,
+            errorSylbFile: false
         };
                
 
@@ -65,21 +70,14 @@
             $scope.states.errorOfficer = false;
             $scope.states.errorManager = false;
             $scope.states.errorActiveDt = false;
-            
-
-
-            $scope.states.errorPubDate = false;
-            $scope.states.errorPrice = false;
-            $scope.states.errorPubHouse = false;
-            $scope.states.errorFile = false;
-            $scope.Message = "";
-            $scope.new.Book = {};
-            $scope.newImgUpload = null;
-            $scope.file = null;
-            $scope.filename = "";
+            $scope.states.errorSylbFile = false;
+            $scope.sylbfile = null;
+            $scope.sylbfilename = '';
+            $scope.sylbfileMessage = 'File extension should be .pdf, .doc, .docx, .xls, .jpg, .png or .jpeg';
             angular.element("input[type='file']").val(null);
-            $("#imageFile").val('');
 
+           
+           
         };
 
         
@@ -95,6 +93,60 @@
             $scope.errorLanguages(len);
         };
 
+        //file 
+        $scope.setSylbFile = function (element) {
+            $scope.$apply(function ($scope) {
+                $scope.sylbfile = element.files[0];
+             
+                $scope.sylbfilename = $scope.sylbfile.name;
+                
+                $scope.errorFileChange($scope.sylbfile, 'sylb');
+                      
+                var getfilename = $scope.sylbfilename;
+                
+                // console.log(filename.length)
+                $scope.chekFileExt(getfilename, 'sylb');
+               
+            });
+
+            $scope.readURL(element);
+        };
+
+        $scope.readURL = function (input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    //if (optVal == 'add') {
+                    //    $('#imageView').attr('src', e.target.result);
+                    //}
+                    //else {
+                    //    $('#editImgView').attr('src', e.target.result);
+                    //}
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        };
+
+        $scope.chekFileExt = function (filename, opt) {           
+            var index = filename.lastIndexOf(".");
+            var strsubstring = filename.substring(index, filename.length).toLowerCase();
+            if (strsubstring == '.pdf' || strsubstring == '.doc' || strsubstring == '.docx' || strsubstring == '.xls' || strsubstring == '.png' || strsubstring == '.jpeg' || strsubstring == '.png' || strsubstring == '.gif') {
+                console.log('File Uploaded sucessfully');
+                if (opt == 'sylb') {
+                    $scope.sylbfileMessage = '';
+                }
+                
+                
+            }
+            else {
+                if (opt == 'sylb') {
+                    $scope.sylbfile = null;
+                    $scope.sylbfilename = '';
+                    $scope.sylbfileMessage = 'please upload correct File Name, File extension should be .pdf, .doc, .docx, .xls, .jpg, .png or .jpeg';
+                }
+               
+            }
+        };
 
       // validation check
 
@@ -162,7 +214,23 @@
             }
         };
 
+        $scope.errorFileChange = function (e, opt) {
+            if (e != null && e != "") {
+                if (opt == 'sylb') {
+                    $scope.sylbfileMessage = '';
+                    return $scope.states.errorSylbFile = false;
+                }
+               
+            }
+            else {
+                if (opt == 'sylb') {
+                    $scope.sylbfileMessage = '';
+                    return $scope.states.errorSylbFile = true;
+                }
+            }
+        };
 
+       
         
         $scope.saveSyllabus = function () {            
             
@@ -173,16 +241,18 @@
             var ofc = $scope.errorOfficerChange($scope.newSyllabus.DevelopmentOfficer);
             var mng = $scope.errorManagerChange($scope.newSyllabus.Manager);
             var adt = $scope.errorActivedtChange($scope.newSyllabus.ActiveDt);
-            
+            var sfile = $scope.errorFileChange($scope.sylbfile, 'sylb');
           
             if (Boolean(trd) == false && Boolean(lvl) == false && Boolean(lng) == false  &&
-                Boolean(slb) == false && Boolean(adt) == false) {
+                Boolean(slb) == false && Boolean(adt) == false && Boolean(sfil) == false) {
 
                 $scope.newSyllabus.SyllabusId = 0;
                 $scope.newSyllabus.UploadBy = 1;
                 $scope.newSyllabus.TradeId = $scope.selectedTrade.TradeId;
                 $scope.newSyllabus.LevelId = $scope.selectedLevel.LevelId;
                 
+                $scope.newSyllabus.SyllabusFileName = $scope.sylbfilename;
+
                 $scope.newSyllabus.states = Math.floor(Math.random() * (1 - 0 + 1) + 0);
 
                 alert($scope.newSyllabus.TradeId + " " + $scope.newSyllabus.LevelId + " " + $scope.newSyllabus.states);
