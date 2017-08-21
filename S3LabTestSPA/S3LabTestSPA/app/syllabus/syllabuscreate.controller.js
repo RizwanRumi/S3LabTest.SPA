@@ -23,49 +23,42 @@
         $scope.levelList = [];
         $scope.languageList = [];
  
-
-        $scope.states = {
-            errorTradeId: false,
-            errorLevelId: false
-        };
-
-
-    //    $scope.active = function () {
-
-            tradeService.getTrades()
-                .then(function (data) {
-                    $scope.tradeList = data;                   
-                });
-
-            levelService.getLevels()
-                .then(function (data) {
-                    $scope.levelList = data;               
-            });
-
-            languageService.getLanguages()
-                .then(function (data) {
-                    $scope.languageList = data;
-                });
-     //   };
-
-        $scope.selectedLangList = []; //this is the object to store the selected checkbox values
-        $scope.change = function (lang) {
-            var indexOfLang = $scope.selectedLangList.indexOf(lang);
-            if (indexOfLang === -1) {
-                $scope.selectedLangList.push(lang)
-            } else {
-                $scope.selectedLangList.splice(indexOfLang, 1)
-            }
-        };
-
-
         $scope.newSyllabus = {};
         $scope.selectedTrade = null;
         $scope.selectedLevel = null;
 
-        $scope.clearSyllabusForm = function (show) {
+        //    $scope.active = function () {
+
+        tradeService.getTrades()
+            .then(function (data) {
+                $scope.tradeList = data;
+            });
+
+        levelService.getLevels()
+            .then(function (data) {
+                $scope.levelList = data;
+            });
+
+        languageService.getLanguages()
+            .then(function (data) {
+                $scope.languageList = data;
+            });
+        //   };
+
+
+        $scope.states = {
+            errorTradeId: false,
+            errorLevelId: false,
+            errorLanguages: false
+        };
+               
+
+        $scope.clearSyllabusForm = function () {
             $scope.states.errorTradeId = false;
-            $scope.states.errorIsbn = false;
+            $scope.states.errorLevelId = false;
+            $scope.states.errorLanguages = false;
+
+
             $scope.states.errorPubDate = false;
             $scope.states.errorPrice = false;
             $scope.states.errorPubHouse = false;
@@ -77,12 +70,26 @@
             $scope.filename = "";
             angular.element("input[type='file']").val(null);
             $("#imageFile").val('');
-           
-        };
-        
 
-        $scope.errorTradeChange = function (e) {
-            alert(e);
+        };
+
+        
+        $scope.selectedLangList = [];
+        $scope.change = function (lang) {
+            var indexOfLang = $scope.selectedLangList.indexOf(lang);
+            if (indexOfLang === -1) {
+                $scope.selectedLangList.push(lang)
+            } else {
+                $scope.selectedLangList.splice(indexOfLang, 1)
+            }
+            var len = $scope.selectedLangList.length;
+            $scope.errorLanguages(len);
+        };
+
+
+      // validation check
+
+        $scope.errorTradeChange = function (e) {            
             if (e != null && e != "") {
                 return $scope.states.errorTradeId = false;
             }
@@ -91,9 +98,17 @@
             }
         };
 
-        $scope.errorLevelChange = function (e) {
-            alert(e);
+        $scope.errorLevelChange = function (e) {            
             if (e != null && e != "") {
+                return $scope.states.errorLevelId = false;
+            }
+            else {
+                return $scope.states.errorLevelId = true;
+            }
+        };
+
+        $scope.errorLanguages = function (e) {
+            if (e > 0) {
                 return $scope.states.errorLevelId = false;
             }
             else {
@@ -104,10 +119,21 @@
         
         $scope.saveSyllabus = function () {
 
-            $scope.newSyllabus.TradeId = $scope.selectedTrade.TradeId;
-            $scope.newSyllabus.LevelId = $scope.selectedLevel.LevelId;
-            
-            alert($scope.newSyllabus.TradeId + " " + $scope.newSyllabus.LevelId);
+            var trade = $scope.errorTradeChange($scope.selectedTrade.TradeId);
+            var lvl = $scope.errorLevelChange($scope.selectedLevel.LevelId);
+            var lng = $scope.errorLanguages($scope.selectedLangList.length);
+
+            if (Boolean(trade) == false && Boolean(lvl) == false && Boolean(lng) == false) {
+
+                $scope.newSyllabus.SyllabusId = 0;
+                $scope.newSyllabus.UploadBy = 1;
+                $scope.newSyllabus.TradeId = $scope.selectedTrade.TradeId;
+                $scope.newSyllabus.LevelId = $scope.selectedLevel.LevelId;
+                $scope.newSyllabus.states = Math.floor(Math.random() * (1 - 0 + 1) + 0);
+
+                alert($scope.newSyllabus.TradeId + " " + $scope.newSyllabus.LevelId + " " + $scope.newSyllabus.states);
+            }
+          
         }
 
     }
