@@ -31,6 +31,10 @@
         $scope.sylbfilename = '';
         $scope.sylbfileMessage = 'File extension should be .pdf, .doc, .docx, .xls, .jpg, .png or .jpeg';
 
+        $scope.planfile = null;
+        $scope.planfilename = '';
+        $scope.planfileMessage = 'File extension should be .pdf, .doc, .docx, .xls, .jpg, .png or .jpeg';
+
         //    $scope.active = function () {
 
         tradeService.getTrades()
@@ -74,6 +78,9 @@
             $scope.sylbfile = null;
             $scope.sylbfilename = '';
             $scope.sylbfileMessage = 'File extension should be .pdf, .doc, .docx, .xls, .jpg, .png or .jpeg';
+            $scope.planfile = null;
+            $scope.planfilename = '';
+            $scope.planfileMessage = 'File extension should be .pdf, .doc, .docx, .xls, .jpg, .png or .jpeg';
             angular.element("input[type='file']").val(null);
 
            
@@ -112,6 +119,25 @@
             $scope.readURL(element);
         };
 
+        $scope.setPlanFile = function (element) {
+            $scope.$apply(function ($scope) {
+                $scope.planfile = element.files[0];
+
+                $scope.planfilename = $scope.planfile.name;
+
+                $scope.errorFileChange($scope.planfile, 'plan');
+
+                var getfilename = $scope.planfilename;
+
+                // console.log(filename.length)
+                $scope.chekFileExt(getfilename, 'plan');
+
+            });
+
+            $scope.readURL(element);
+        };
+
+
         $scope.readURL = function (input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -135,7 +161,9 @@
                 if (opt == 'sylb') {
                     $scope.sylbfileMessage = '';
                 }
-                
+                else {
+                    $scop.planfileMessage = '';
+                }
                 
             }
             else {
@@ -143,6 +171,12 @@
                     $scope.sylbfile = null;
                     $scope.sylbfilename = '';
                     $scope.sylbfileMessage = 'please upload correct File Name, File extension should be .pdf, .doc, .docx, .xls, .jpg, .png or .jpeg';
+                }
+                else
+                {
+                    $scope.planfile = null;
+                    $scope.planfilename = '';
+                    $scope.planfileMessage = 'please upload correct File Name, File extension should be .pdf, .doc, .docx, .xls, .jpg, .png or .jpeg';
                 }
                
             }
@@ -220,12 +254,19 @@
                     $scope.sylbfileMessage = '';
                     return $scope.states.errorSylbFile = false;
                 }
-               
+                else {
+                    $scope.planfileMessage = '';
+                    return $scope.states.errorPlanFile = false;
+                }
             }
             else {
                 if (opt == 'sylb') {
                     $scope.sylbfileMessage = '';
                     return $scope.states.errorSylbFile = true;
+                }
+                else {
+                    $scope.planfileMessage = '';
+                    return $scope.states.errorPlanFile = true;
                 }
             }
         };
@@ -242,9 +283,10 @@
             var mng = $scope.errorManagerChange($scope.newSyllabus.Manager);
             var adt = $scope.errorActivedtChange($scope.newSyllabus.ActiveDt);
             var sfile = $scope.errorFileChange($scope.sylbfile, 'sylb');
+            var pfile = $scope.errorFileChange($scope.planfile, 'plan');
           
             if (Boolean(trd) == false && Boolean(lvl) == false && Boolean(lng) == false  &&
-                Boolean(slb) == false && Boolean(adt) == false && Boolean(sfil) == false) {
+                Boolean(slb) == false && Boolean(adt) == false && Boolean(sfile) == false && Boolean(pfile) == false) {
 
                 $scope.newSyllabus.SyllabusId = 0;
                 $scope.newSyllabus.UploadBy = 1;
