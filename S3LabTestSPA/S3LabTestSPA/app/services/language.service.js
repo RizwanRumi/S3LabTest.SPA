@@ -16,7 +16,8 @@
 
 
         return {
-            getLanguages: getLanguages
+            getLanguages: getLanguages,
+            insertSelectedLang: insertSelectedLang
         };
 
         function getLanguages() {
@@ -32,6 +33,20 @@
             }
         };
 
+        function insertSelectedLang(val) {
+            debugger;
+            return $http.post(urlBase + "/addSelectedLang", val)
+                .then(setSyllabus, setSyllabusError);
+
+            function setSyllabus(response) {
+                return response.data;
+            };
+
+            function setSyllabusError(error) {
+                logger.error('XHR Failed for setSyllabusFailed.' + error.data);
+            };
+
+        };
 
     }
 

@@ -23,8 +23,7 @@
             return $http.get(urlBase + "/GeTSyllabus")
                 .then(getAllSyllabus, getSyllabusFailed);
 
-            function getAllSyllabus(response) {
-                alert(response.data);
+            function getAllSyllabus(response) {                
                 return response.data;
             }
 

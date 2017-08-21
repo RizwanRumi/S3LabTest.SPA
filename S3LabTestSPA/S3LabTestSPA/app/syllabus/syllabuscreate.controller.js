@@ -336,10 +336,25 @@
 
                         syllabusService.insertSyllabus(syllabus)
                         .then(function (result) {
-                            alert(result);
+                            
+                            var getSylbId = result;
+                            var languageList = $scope.selectedLangList;
+                            var data = {
+                                SylbId: getSylbId,
+                                SelectedLangs : languageList
+                            }
+                            
+                            if (languageList.length != 0) {
+                                languageService.insertSelectedLang(data)
+                                    .then(function (result) {
+                                        alert("Save Successfully.");
+                                    });
+                            }
+                            
+
                         });
 
-                        alert($scope.newSyllabus.TradeId + " " + $scope.newSyllabus.LevelId + " " + $scope.newSyllabus.Status);
+                        
                     });
                 }, 3000);
 

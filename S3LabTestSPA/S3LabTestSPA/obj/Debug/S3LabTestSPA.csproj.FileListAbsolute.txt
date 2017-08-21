@@ -27,5 +27,6 @@ E:\Language & Program\s3innovate\S3LabTest\S3LabTest.SPA\S3LabTestSPA\S3LabTestS
 E:\Language & Program\s3innovate\S3LabTest\S3LabTest.SPA\S3LabTestSPA\S3LabTestSPA\bin\System.Web.WebPages.xml
 E:\Language & Program\s3innovate\S3LabTest\S3LabTest.SPA\S3LabTestSPA\S3LabTestSPA\bin\System.Web.WebPages.Deployment.xml
 E:\Language & Program\s3innovate\S3LabTest\S3LabTest.SPA\S3LabTestSPA\S3LabTestSPA\bin\System.Web.WebPages.Razor.xml
+E:\Language & Program\s3innovate\S3LabTest\S3LabTest.SPA\S3LabTestSPA\S3LabTestSPA\obj\Debug\S3LabTestSPA.csprojResolveAssemblyReference.cache
 E:\Language & Program\s3innovate\S3LabTest\S3LabTest.SPA\S3LabTestSPA\S3LabTestSPA\obj\Debug\S3LabTestSPA.dll
 E:\Language & Program\s3innovate\S3LabTest\S3LabTest.SPA\S3LabTestSPA\S3LabTestSPA\obj\Debug\S3LabTestSPA.pdb
