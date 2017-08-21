@@ -5,8 +5,7 @@
     angular.module('myApp')
     .controller('SyllabusCreateController', SyllabusCreateController);
 
-    SyllabusCreateController.$inject = ['$location',
-                                        '$window',
+    SyllabusCreateController.$inject = ['$state',
                                         '$scope',
                                         'tradeService',
                                         'levelService',
@@ -17,7 +16,7 @@
                                         'logger'];
 
 
-    function SyllabusCreateController($location, $window, $scope, tradeService, levelService,
+    function SyllabusCreateController($state, $scope, tradeService, levelService,
         languageService, fileuploadservice, syllabusService, pagerService, logger) {
       
         $scope.myName = "Rizwanur Rahman Rumi";
@@ -283,9 +282,7 @@
 
             var date = new Date();
             $scope.today = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
-
-
-            
+                             
             var trd = $scope.errorTradeChange($scope.selectedTrade);
             var lvl = $scope.errorLevelChange($scope.selectedLevel);
             var lng = $scope.errorLanguages($scope.selectedLangList.length);
@@ -348,6 +345,7 @@
                                 languageService.insertSelectedLang(data)
                                     .then(function (result) {
                                         alert("Save Successfully.");
+                                        $state.go('syllabus.list');
                                     });
                             }
                             
@@ -356,7 +354,7 @@
 
                         
                     });
-                }, 3000);
+                }, 2000);
 
                 
             }

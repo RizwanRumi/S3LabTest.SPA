@@ -15,12 +15,12 @@
     function syllabusService($http, logger) {
 
         return {
-            getSyllabus: getSyllabus,
+            getSyllabusList: getSyllabusList,
             insertSyllabus: insertSyllabus
         };
 
-        function getSyllabus() {
-            return $http.get(urlBase + "/GeTSyllabus")
+        function getSyllabusList() {
+            return $http.get(urlBase + "/getSyllabus")
                 .then(getAllSyllabus, getSyllabusFailed);
 
             function getAllSyllabus(response) {                
@@ -31,7 +31,6 @@
                 logger.error('XHR Failed for getSyllabusFailed.' + error.data);
             }
         };
-
 
         function insertSyllabus(sylabus) {
             debugger;
@@ -48,6 +47,6 @@
 
         };
 
-
+        
     };
 })();

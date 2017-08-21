@@ -1,10 +1,108 @@
 ﻿
 
-<div ng-controller="SyllabusController as vm">
+<div class="container-fluid" ng-controller="SyllabusController">
    
-  <h2>{{vm.listP}}</h2>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Trade </label>
+                <div>
+                    <select ng-model="selectedTrade" ng-options="trade.TradeName for trade in tradeList" ng-change="errorTradeChange(selectedTrade.TradeId)" class="form-control">
+                        <option value="">Please Select</option>
+                    </select>
+                    <div class="text-danger" ng-if="states.errorTradeId">Please field required.</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Level </label>
+                <div>
+                    <select ng-model="selectedLevel" ng-options="lvl.LevelName for lvl in levelList" ng-change="errorLevelChange(selectedLevel.LevelId)" class="form-control">
+                        <option value="">Please Select</option>
+                    </select>
+                    <div class="text-danger" ng-if="states.errorLevelId">Please field required.</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
 
-    
+    <hr />
 
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Syllabus</th>
+                        <th>Trade</th>
+                        <th>Level</th>
+                        <th>Uploaded Syllabus</th>
+                        <th>Uploaded Test Plan</th>
+                        <th>Languages</th>
+                        <th>Uploaded By</th>
+                        <th>Uploaded Date</th>
+                        <th>Activate Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="slb in syllabusList">
+                        <th>{{slb.SyllabusMergeId}}</th>                        
+                        <td>{{slb.SyllabusMergeName}}</td>
+                        <td>{{slb.TradeName}}</td>
+                        <td>{{slb.LevelName}}</td>
+                        <td>
+                            <file-download fileurl="./UploadFiles/{{slb.SyllabusMDocUrl}}" linktext="{{slb.SyllabusMDocUrl}}"></file-download>
+                        </td>
+
+                        <td>
+                            <file-download fileurl="./UploadFiles/{{slb.TestPlanMUrl}}" linktext="{{slb.TestPlanMUrl}}"></file-download>
+                        </td>
+                        
+                        <td>{{slb.Languages}}</td>                        
+                        <td>{{slb.UploadMBy}}</td>                       
+                        <td>{{slb.SylbUploadDt | date: 'yyyy-mm-dd'}}</td>
+                        <td>{{slb.SylbActiveDt | date: 'yyyy-mm-dd'}}</td>
+                        <td>
+                            <button type="button" class="btn btn-default" ng-if="slb.Status == 0">Inactive</button>
+                            <button type="button" class="btn btn-primary" ng-if="slb.Status == 1" >Active</button>
+                        </td>
+
+
+                    </tr>
+                    <tr ng-if="syllabusList.length==0">
+                        <td colspan="4" class="text-center">There have no Syllabus to display.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <pre>Showing Total: {{syllabusList.length}}</pre>
+            <div class="text-center">
+                <!-- pager -->
+                <ul ng-if="pager.pages.length" class="pagination">
+                    <li ng-class="{disabled:pager.currentPage === 1}">
+                        <a ng-click="setPage(1)">First</a>
+                    </li>
+                    <li ng-class="{disabled:pager.currentPage === 1}">
+                        <a ng-click="setPage(pager.currentPage - 1)">Previous</a>
+                    </li>
+                    <li ng-repeat="page in pager.pages" ng-class="{active:pager.currentPage === page}">
+                        <a ng-click="setPage(page)">{{page}}</a>
+                    </li>
+                    <li ng-class="{disabled:pager.currentPage === pager.totalPages}">
+                        <a ng-click="setPage(pager.currentPage + 1)">Next</a>
+                    </li>
+                    <li ng-class="{disabled:pager.currentPage === pager.totalPages}">
+                        <a ng-click="setPage(pager.totalPages)">Last</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        </div>
 </div>
 <div ui-view></div>

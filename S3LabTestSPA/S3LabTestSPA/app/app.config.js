@@ -18,8 +18,7 @@
             state('syllabus.list', {
                 url: '/list',
                 templateUrl: 'app/syllabus/partial-syllabus-list.html',
-                controller: 'SyllabusController',
-                controllerAs: 'slb'
+                controller: 'SyllabusController'
             }).
             state('syllabus.create', {
                 url: '/create',
