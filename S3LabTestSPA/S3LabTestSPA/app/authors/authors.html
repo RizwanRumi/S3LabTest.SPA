@@ -1,0 +1,152 @@
+﻿
+
+<div>
+    <br />
+    <index-nav id="indexnav"></index-nav>
+</div>
+
+<div ng-controller="AuthorsController as vm">
+   
+    <div class="panel">
+
+        <div class="panel-heading">
+            <div class="pull-left">
+                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#authorModal"><span class="glyphicon glyphicon-plus-sign"></span>Add Author</button>
+            </div>
+            <div class="pull-right">
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="authorSearch" placeholder="Search">
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body">
+
+            <table class="table table-responsive table-hover">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Initials</th>
+                        <th>Address</th>
+                        <th>Zip Code</th>
+                        <th>Country</th>
+                    </tr>
+                </thead>
+                <tbody>                  
+                    <!--such-href="/author({authorId : a.AuthorId})" -> this directive tried, but does not work-->
+                    <tr ng-repeat="a in vm.authorsList | filter : authorSearch" ui-sref="/author({authorId : a.AuthorId})" style="cursor:pointer">
+                        <td>{{a.FirstName}}</td>
+                        <td>{{a.LastName}}</td>
+                        <td>{{a.Initials}}</td>
+                        <td>{{a.Address}}</td>
+                        <td>{{a.ZipCode}}</td>
+                        <td>{{a.Country}}</td>
+                    </tr>
+                    <tr ng-if="vm.authorsList.length==0">
+                        <td colspan="4" class="text-center">There have no Author to display.</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <pre>Showing Total: {{vm.authorsList.length}}</pre>
+
+            <div class="text-center">
+                <!-- pager -->
+                <ul ng-if="vm.pager.pages.length" class="pagination">
+                    <li ng-class="{disabled:vm.pager.currentPage === 1}">
+                        <a ng-click="vm.setPage(1)">First</a>
+                    </li>
+                    <li ng-class="{disabled:vm.pager.currentPage === 1}">
+                        <a ng-click="vm.setPage(vm.pager.currentPage - 1)">Previous</a>
+                    </li>
+                    <li ng-repeat="page in vm.pager.pages" ng-class="{active:vm.pager.currentPage === page}">
+                        <a ng-click="vm.setPage(page)">{{page}}</a>
+                    </li>
+                    <li ng-class="{disabled:vm.pager.currentPage === vm.pager.totalPages}">
+                        <a ng-click="vm.setPage(vm.pager.currentPage + 1)">Next</a>
+                    </li>
+                    <li ng-class="{disabled:vm.pager.currentPage === vm.pager.totalPages}">
+                        <a ng-click="vm.setPage(vm.pager.totalPages)">Last</a>
+                    </li>
+                </ul>
+            </div>
+           
+        </div>
+       
+        
+    </div>
+
+   
+
+    <div class="modal fade" id="authorModal" tabindex="-1" role="dialog" aria-labelledby="authorModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add Author</h4>
+                </div>
+                <div class="modal-body">
+
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="control-label">Initials</label>
+                                        <input type="text" class="form-control" id="initials" ng-model="vm.Author.Initials" ng-keyup="vm.errorInitStateChange(vm.Author.Initials)" aria-describedby=" addInitials" placeholder="Initials" required="required">
+                                        <div class="text-danger" ng-if="vm.states.errorInitials">Please field required.</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="control-label">First Name</label>
+                                        <input type="text" class="form-control" id="firstName" ng-model="vm.Author.FirstName" ng-keyup="vm.errorFNameStateChange(vm.Author.FirstName)" aria-describedby=" addFirstName" placeholder="First Name" required="required">
+                                        <div class="text-danger" ng-if="vm.states.errorFirstName">Please field required.</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="control-label">Last Name</label>
+                                        <input type="text" class="form-control" id="lastName" ng-model="vm.Author.LastName" ng-keyup="vm.errorLNameStateChange(vm.Author.LastName)" aria-describedby=" addLastName" placeholder="Last Name" required="required">
+                                        <div class="text-danger" ng-if="vm.states.errorLastName">Please field required.</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="control-label">Address</label>
+                                        <input type="text" class="form-control" id="address" ng-model="vm.Author.Address" ng-keyup="vm.errorAdrStateChange(vm.Author.Address)" aria-describedby=" addAddress" placeholder="Please Set Address" required="required">
+                                        <div class="text-danger" ng-if="vm.states.errorAddress">Please field required.</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="control-label">Zip Code</label>
+                                        <input type="number" class="form-control" id="zidcode" ng-model="vm.Author.ZipCode" min="1" maxlength="5" ng-keyup="vm.errorZipStateChange(vm.Author.ZipCode)" aria-describedby=" addZipCode" placeholder="Please Set Zip Code" required="required">
+                                        <div class="text-danger" ng-if="vm.states.errorZipCode">Please field required.</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="control-label">Country:</label>
+                                        <input type="text" class="form-control" id="country" ng-model="vm.Author.Country" ng-keyup="vm.errorCntryStateChange(vm.Author.Country)" aria-describedby="addCountry" placeholder="Please Set Country Name" required="required">
+                                        <div class="text-danger" ng-if="vm.states.errorCountry">Please field required.</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <div id="msgView" class='alert alert-block alert-dismissable fade in' style="text-align:center;">{{vm.Message}}</div>
+                    <button type="button" class="btn btn-primary" ng-click="vm.saveAuthor()"> Save</button>
+                    <button type="button" class="btn btn-default" ng-click="vm.clearAuthorForm(false)" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

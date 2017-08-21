@@ -1,0 +1,151 @@
+﻿
+
+<div class="container-fluid" ng-controller="SyllabusCreateController">
+    <h5>{{myName}}</h5>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Trade </label>
+                <div>
+                    <select ng-model="selectedTrade" ng-options="trade.TradeName for trade in tradeList" ng-change="errorTradeChange(selectedTrade.TradeId)" class="form-control">
+                        <option value="">Please Select</option>
+                    </select>
+                    <div class="text-danger" ng-if="states.errorTradeId">Please field required.</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Level </label>
+                <div>
+                    <select ng-model="selectedLevel" ng-options="lvl.LevelName for lvl in levelList" ng-change="errorLevelChange(selectedLevel.LevelId)" class="form-control">
+                        <option value="">Please Select</option>
+                    </select>
+                    <div class="text-danger" ng-if="states.errorLevelId">Please field required.</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label> Language </label>
+                <div>
+                    <span ng-repeat="lang in languageList">
+                        <input type="checkbox" id="{{lang.LanguageName}}" ng-model="langSelected" ng-change="change(lang.LanguageId)" />
+                        <label for="{{lang.LanguageName}}">{{lang.LanguageName}}</label>
+                        &nbsp;
+                    </span>
+
+                    <span ng-repeat="val in selectedLangList">
+                        <div>{{val}}</div>
+                    </span>
+                    
+                    <div class="text-danger" ng-if="states.errorLanguages">Minimum one language required.</div>
+                </div>               
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="form-group">
+                <label>Syllabus Name</label>
+                <input type="text" class="form-control" ng-model="newSyllabus.SyllabusName" ng-keyup="errorSylbNameChange(newSyllabus.SyllabusName)" required="required">
+                <div class="text-danger" ng-if="states.errorSylbName">Please field required.</div>
+            </div>
+        </div>                 
+    </div>
+
+    <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="fileUpload btn btn-primary">
+                        <span class="glyphicon glyphicon-cloud-upload"></span> Upload Syllabus
+                        <input type="file" class="upload" onchange="angular.element(this).scope().setSylbFile(this)" />
+                    </div>
+                    &nbsp;&nbsp;
+                    <input type="text" style="color:#000000;background:#00ff90" placeholder="No File Choosen" ng-model="sylbfilename" disabled="disabled" />               
+                    <span class="text-danger">{{sylbfileMessage}}</span>
+                    <div class="text-danger" ng-if="states.errorSylbFile">Please Upload file.</div>
+                </div>
+            </div>
+        </div>
+           
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="fileUpload btn btn-primary">
+                    <span class="glyphicon glyphicon-cloud-upload"></span> Upload Test Plan
+                    <input type="file" class="upload" onchange="angular.element(this).scope().setPlanFile(this)" />
+                </div>
+                &nbsp;&nbsp;
+                <input type="text" style="color:#000000;background:#00ff90" placeholder="No File Choosen" ng-model="planfilename" disabled="disabled" />
+                <span class="text-danger">{{planfileMessage}}</span>
+                <div class="text-danger" ng-if="states.errorPlanFile">Please Upload file.</div>
+            </div>
+        </div>
+        </div>
+        
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Development Officer</label>
+                <input type="text" class="form-control" ng-model="newSyllabus.DevelopmentOfficer" ng-keyup="errorOfficerChange(newSyllabus.DevelopmentOfficer)" required="required">
+                <div class="text-danger" ng-if="states.errorOfficer">Please field required.</div>
+            </div>
+        </div>
+    </div>
+        
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Manager</label>
+                <input type="text" class="form-control" ng-model="newSyllabus.Manager" ng-keyup="errorManagerChange(newSyllabus.Manager)" required="required">
+                <div class="text-danger" ng-if="states.errorManager">Please field required.</div>
+            </div>
+        </div>
+    </div>
+        
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Active Date</label>                    
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="date" name="date" placeholder="YYYY-MM-DD" ng-model="newSyllabus.ActiveDt" ng-click="errorActivedtChange(newSyllabus.ActiveDt)" ng-change="errorActivedtChange(newSyllabus.ActiveDt)" aria-describedby="addDate" required="required" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    <div class="text-danger" ng-if="states.errorActiveDt">Please field required.</div>                    
+            </div>
+        </div>
+     </div>
+       
+    <div class="row">
+        <div class="col-md-5">
+            <button type="button" class="btn btn-primary" ng-click="saveSyllabus()"> Save</button>
+            <button type="button" class="btn btn-default" ng-click="clearSyllabusForm(false)">Clear</button>
+        </div>
+    </div> 
+
+   
+</div>
+<div ui-view></div>
+
+
+<script>
+    $(document).ready(function () {
+        var date_input = $('input[name="date"]'); //our date input has the name "date"
+        var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+        date_input.datepicker({
+            format: 'yyyy-mm-dd',
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+        })
+
+    })
+
+</script>

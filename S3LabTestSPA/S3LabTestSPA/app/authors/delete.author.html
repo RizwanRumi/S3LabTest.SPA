@@ -1,0 +1,76 @@
+﻿
+<div>
+    <br />
+    <author-nav id="authornav"></author-nav>
+</div>
+
+
+
+<div ng-controller="DeleteAuthorController as deletAuthor">
+
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Delete Author
+            </h3>
+
+            <div class="row">
+                <div class="col-lg-9">
+                    <h3><b>{{deletAuthor.authorInfo.FirstName}}&nbsp;{{deletAuthor.authorInfo.LastName}}</b></h3>
+                </div>
+
+                <div class="col-lg-3">
+
+                    <!--<a href="#!/Details/{{authorInfo.AuthorId}}" class="btn  btn-md btn-primary"> < Back</a>
+                    &#09;&#09;-->
+
+                    <button type="button" class="btn btn-md btn-danger" ng-click="vm.deleteAuthor(deletAuthor.authorInfo.AuthorId)"><span class="glyphicon glyphicon-pencil"></span>Delete</button>
+
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table  table-bordered">
+                    <thead>
+
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>
+                                <h3>Name</h3>
+                                {{deletAuthor.authorInfo.Initials}}&nbsp;{{deletAuthor.authorInfo.FirstName}}&nbsp;{{deletAuthor.authorInfo.LastName}}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <h3>Address</h3>
+                                <span>House: {{deletAuthor.authorInfo.Address}} </span> <br />
+                                <span>Zip Code: {{deletAuthor.authorInfo.ZipCode}}</span> <br />
+                                <span>Country: {{deletAuthor.authorInfo.Country}}</span>
+                            </td>
+                        </tr>
+
+
+
+
+
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
