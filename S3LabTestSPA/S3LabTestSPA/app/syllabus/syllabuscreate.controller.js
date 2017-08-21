@@ -49,7 +49,11 @@
         $scope.states = {
             errorTradeId: false,
             errorLevelId: false,
-            errorLanguages: false
+            errorLanguages: false,
+            errorSylbName: false,
+            errorOfficer: false,
+            errorManager: false,
+            errorActiveDt: false
         };
                
 
@@ -57,6 +61,11 @@
             $scope.states.errorTradeId = false;
             $scope.states.errorLevelId = false;
             $scope.states.errorLanguages = false;
+            $scope.states.errorSylbName = false;
+            $scope.states.errorOfficer = false;
+            $scope.states.errorManager = false;
+            $scope.states.errorActiveDt = false;
+            
 
 
             $scope.states.errorPubDate = false;
@@ -89,7 +98,7 @@
 
       // validation check
 
-        $scope.errorTradeChange = function (e) {            
+        $scope.errorTradeChange = function (e) {          
             if (e != null && e != "") {
                 return $scope.states.errorTradeId = false;
             }
@@ -108,27 +117,72 @@
         };
 
         $scope.errorLanguages = function (e) {
+           
             if (e > 0) {
-                return $scope.states.errorLevelId = false;
+                return $scope.states.errorLanguages = false;
             }
             else {
-                return $scope.states.errorLevelId = true;
+                return $scope.states.errorLanguages = true;
             }
         };
    
+        $scope.errorSylbNameChange = function (e) {
+            if (e != null && e != "") {
+                return $scope.states.errorSylbName = false;
+            }
+            else {
+                return $scope.states.errorSylbName = true;
+            }
+        };
+
+        $scope.errorOfficerChange = function (e) {
+            if (e != null && e != "") {
+                return $scope.states.errorOfficer = false;
+            }
+            else {
+                return $scope.states.errorOfficer = true;
+            }
+        };
+
+        $scope.errorManagerChange = function (e) {
+            if (e != null && e != "") {
+                return $scope.states.errorManager = false;
+            }
+            else {
+                return $scope.states.errorManager = true;
+            }
+        };
+
+        $scope.errorActivedtChange = function (e) {            
+            if (e != null && e != "") {
+                return $scope.states.errorActiveDt = false;
+            }
+            else {
+                return $scope.states.errorActiveDt = true;
+            }
+        };
+
+
         
-        $scope.saveSyllabus = function () {
-
-            var trade = $scope.errorTradeChange($scope.selectedTrade.TradeId);
-            var lvl = $scope.errorLevelChange($scope.selectedLevel.LevelId);
+        $scope.saveSyllabus = function () {            
+            
+            var trd = $scope.errorTradeChange($scope.selectedTrade);
+            var lvl = $scope.errorLevelChange($scope.selectedLevel);
             var lng = $scope.errorLanguages($scope.selectedLangList.length);
-
-            if (Boolean(trade) == false && Boolean(lvl) == false && Boolean(lng) == false) {
+            var slb = $scope.errorSylbNameChange($scope.newSyllabus.SyllabusName);
+            var ofc = $scope.errorOfficerChange($scope.newSyllabus.DevelopmentOfficer);
+            var mng = $scope.errorManagerChange($scope.newSyllabus.Manager);
+            var adt = $scope.errorActivedtChange($scope.newSyllabus.ActiveDt);
+            
+          
+            if (Boolean(trd) == false && Boolean(lvl) == false && Boolean(lng) == false  &&
+                Boolean(slb) == false && Boolean(adt) == false) {
 
                 $scope.newSyllabus.SyllabusId = 0;
                 $scope.newSyllabus.UploadBy = 1;
                 $scope.newSyllabus.TradeId = $scope.selectedTrade.TradeId;
                 $scope.newSyllabus.LevelId = $scope.selectedLevel.LevelId;
+                
                 $scope.newSyllabus.states = Math.floor(Math.random() * (1 - 0 + 1) + 0);
 
                 alert($scope.newSyllabus.TradeId + " " + $scope.newSyllabus.LevelId + " " + $scope.newSyllabus.states);
