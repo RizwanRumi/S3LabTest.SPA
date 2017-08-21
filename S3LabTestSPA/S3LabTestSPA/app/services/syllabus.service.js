@@ -9,7 +9,7 @@
 
     syllabusService.$inject = ['$http', 'logger'];
 
-    var urlBase = "http://localhost:9235/api/Books";
+    var urlBase = "http://localhost:4664/api/Syllabus";
 
 
     function syllabusService($http, logger) {
@@ -20,10 +20,11 @@
         };
 
         function getSyllabus() {
-            return $http.get(urlBase)
+            return $http.get(urlBase + "/GeTSyllabus")
                 .then(getAllSyllabus, getSyllabusFailed);
 
             function getAllSyllabus(response) {
+                alert(response.data);
                 return response.data;
             }
 
@@ -33,9 +34,9 @@
         };
 
 
-        function insertSyllabus(syllabus) {
+        function insertSyllabus(sylabus) {
             debugger;
-            return $http.post(urlBase, syllabus)
+            return $http.post(urlBase + "/addSyllabus", sylabus)
                 .then(setSyllabus, setSyllabusError);
 
             function setSyllabus(response) {

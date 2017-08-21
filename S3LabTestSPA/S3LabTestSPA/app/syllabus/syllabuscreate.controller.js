@@ -306,7 +306,7 @@
                 
                 $scope.newSyllabus.UploadDt = $scope.today;
 
-                $scope.newSyllabus.states = Math.floor(Math.random() * (1 - 0 + 1) + 0);
+                $scope.newSyllabus.Status = Math.floor(Math.random() * (1 - 0 + 1) + 0);
 
                 var sylbfiles = $scope.sylbfile;
 
@@ -331,9 +331,15 @@
 
                 setTimeout(function () {
                     $scope.$apply(function () {
-                        var check = 45;
+                        
+                        var syllabus = $scope.newSyllabus;
 
-                        alert($scope.newSyllabus.TradeId + " " + $scope.newSyllabus.LevelId + " " + $scope.newSyllabus.states);
+                        syllabusService.insertSyllabus(syllabus)
+                        .then(function (result) {
+                            alert(result);
+                        });
+
+                        alert($scope.newSyllabus.TradeId + " " + $scope.newSyllabus.LevelId + " " + $scope.newSyllabus.Status);
                     });
                 }, 3000);
 
