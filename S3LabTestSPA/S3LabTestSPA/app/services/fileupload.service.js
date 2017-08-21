@@ -7,16 +7,16 @@
 
     fileuploadservice.$inject = ['$http', 'logger'];
 
-    var urlBase = "http://localhost:9235/api/Files";
+    var urlBase = "http://localhost:2093/Files/FileUpload";
 
 
     function fileuploadservice($http, logger) {
 
         return {
-            UploadImage: UploadImage
+            UploadFile: UploadFile
         };
 
-        function UploadImage(data) {
+        function UploadFile(data) {
             debugger;
             return $http.post(urlBase, data, {
                 transformRequest: angular.identity,
@@ -33,23 +33,6 @@
             };
 
         };
-
-
-        function insertBook(book) {
-            debugger;
-            return $http.post(urlBase, insertBook)
-                .then(getBook, getBookError);
-
-            function getBook(response) {
-                return response.data;
-            };
-
-            function getBookError(error) {
-                logger.error('XHR Failed for getAuthorsFailed.' + error.data);
-            };
-
-        };
-
 
     };
 })();

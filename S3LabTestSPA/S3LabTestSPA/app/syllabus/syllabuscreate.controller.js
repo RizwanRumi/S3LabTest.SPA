@@ -11,11 +11,14 @@
                                         'tradeService',
                                         'levelService',
                                         'languageService',
+                                        'fileuploadservice',
+                                        'syllabusService',
                                         'pagerService',
                                         'logger'];
 
 
-    function SyllabusCreateController($location, $window, $scope, tradeService, levelService, languageService, pagerService, logger) {
+    function SyllabusCreateController($location, $window, $scope, tradeService, levelService,
+        languageService, fileuploadservice, syllabusService, pagerService, logger) {
       
         $scope.myName = "Rizwanur Rahman Rumi";
 
@@ -299,14 +302,42 @@
                 $scope.newSyllabus.SyllabusId = 0;
                 $scope.newSyllabus.UploadBy = 1;
                 $scope.newSyllabus.TradeId = $scope.selectedTrade.TradeId;
-                $scope.newSyllabus.LevelId = $scope.selectedLevel.LevelId;                
-                $scope.newSyllabus.SyllabusDocUrl = $scope.sylbfilename;
-                $scope.newSyllabus.TestPlanUrl = $scope.planfilename;
+                $scope.newSyllabus.LevelId = $scope.selectedLevel.LevelId;  
+                
                 $scope.newSyllabus.UploadDt = $scope.today;
 
                 $scope.newSyllabus.states = Math.floor(Math.random() * (1 - 0 + 1) + 0);
 
-                alert($scope.newSyllabus.TradeId + " " + $scope.newSyllabus.LevelId + " " + $scope.newSyllabus.states);
+                var sylbfiles = $scope.sylbfile;
+
+                var data = new FormData();
+                data.append('selectedFile', sylbfiles);
+
+                fileuploadservice.UploadFile(data)
+                        .then(function (result) {                            
+                            $scope.newSyllabus.SyllabusDocUrl = result;
+                        });
+
+
+                var planfiles = $scope.planfile;
+
+                var data = new FormData();
+                data.append('selectedFile', planfiles);
+
+                fileuploadservice.UploadFile(data)
+                        .then(function (result) {
+                            $scope.newSyllabus.TestPlanUrl = result;
+                        });
+
+                setTimeout(function () {
+                    $scope.$apply(function () {
+                        var check = 45;
+
+                        alert($scope.newSyllabus.TradeId + " " + $scope.newSyllabus.LevelId + " " + $scope.newSyllabus.states);
+                    });
+                }, 3000);
+
+                
             }
           
         }
