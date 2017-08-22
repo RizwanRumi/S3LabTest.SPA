@@ -1,30 +1,41 @@
 ﻿
 
 <div class="container-fluid" ng-controller="SyllabusController">
-   
+       
     <div class="row">
-        <div class="col-md-3">
+        <div>
             <div class="form-group">
-                <label>Trade </label>
-                <div>
+                <label class="col-md-1">Trade </label>
+                <div class="col-md-4">
                     <select ng-model="selectedTrade" ng-options="trade.TradeName for trade in tradeList" ng-change="errorTradeChange(selectedTrade.TradeId)" class="form-control">
                         <option value="">Please Select</option>
                     </select>
-                    <div class="text-danger" ng-if="states.errorTradeId">Please field required.</div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div>
             <div class="form-group">
-                <label>Level </label>
-                <div>
+                <label class="col-md-1">Level </label>
+                <div class="col-md-4">
                     <select ng-model="selectedLevel" ng-options="lvl.LevelName for lvl in levelList" ng-change="errorLevelChange(selectedLevel.LevelId)" class="form-control">
                         <option value="">Please Select</option>
                     </select>
-                    <div class="text-danger" ng-if="states.errorLevelId">Please field required.</div>
+                </div>                
+            </div>
+        </div>
+        <div>
+            <div class="form-group">
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-info" ng-click="filterData(selectedTrade.TradeId, selectedLevel.LevelId)">
+                        Search
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+
                 </div>
             </div>
         </div>
+        
+        
         
     </div>
 
@@ -52,7 +63,15 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="slb in syllabusList">
-                        <th>{{slb.SyllabusMergeId}}</th>                        
+                        <td>
+                            <a ui-sref="syllabus.edit({syllabusId : slb.SyllabusMergeId})">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                            <a ui-sref="syllabus.delete({syllabusId : slb.SyllabusMergeId})">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        <!--{{slb.SyllabusMergeId}}-->
+                        </td>
                         <td>{{slb.SyllabusMergeName}}</td>
                         <td>{{slb.TradeName}}</td>
                         <td>{{slb.LevelName}}</td>
@@ -63,14 +82,14 @@
                         <td>
                             <file-download fileurl="./UploadFiles/{{slb.TestPlanMUrl}}" linktext="{{slb.TestPlanMUrl}}"></file-download>
                         </td>
-                        
-                        <td>{{slb.Languages}}</td>                        
-                        <td>{{slb.UploadMBy}}</td>                       
+
+                        <td>{{slb.Languages}}</td>
+                        <td>{{slb.UploadMBy}}</td>
                         <td>{{slb.SylbUploadDt | date: 'yyyy-mm-dd'}}</td>
                         <td>{{slb.SylbActiveDt | date: 'yyyy-mm-dd'}}</td>
                         <td>
                             <button type="button" class="btn btn-default" ng-if="slb.Status == 0">Inactive</button>
-                            <button type="button" class="btn btn-primary" ng-if="slb.Status == 1" >Active</button>
+                            <button type="button" class="btn btn-primary" ng-if="slb.Status == 1">Active</button>
                         </td>
 
 

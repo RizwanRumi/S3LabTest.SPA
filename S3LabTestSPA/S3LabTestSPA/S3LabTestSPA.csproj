@@ -111,6 +111,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\components\filedownload.directive.js" />
+    <Content Include="app\syllabus\partial-syllabus-delete.html" />
+    <Content Include="app\syllabus\partial-syllabus-edit.html" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
     <None Include="Web.Debug.config">
@@ -123,22 +125,8 @@
   <ItemGroup>
     <Content Include="app\app.config.js" />
     <Content Include="app\app.module.js" />
-    <Content Include="app\authors\author.controller.js" />
-    <Content Include="app\authors\author.html" />
-    <Content Include="app\authors\authors.controller.js" />
-    <Content Include="app\authors\authors.html" />
-    <Content Include="app\authors\delete.author.html" />
-    <Content Include="app\authors\delete.controller.js" />
-    <Content Include="app\books\books.controller.js" />
-    <Content Include="app\books\books.html" />
-    <Content Include="app\components\authornav.directive.html" />
-    <Content Include="app\components\authornav.directive.js" />
     <Content Include="app\components\nav.directive.html" />
-    <Content Include="app\components\nav2.directive.html" />
     <Content Include="app\components\nav.directive.js" />
-    <Content Include="app\components\suchhref.directive.js" />
-    <Content Include="app\services\author.service.js" />
-    <Content Include="app\services\book.service.js" />
     <Content Include="app\services\fileupload.service.js" />
     <Content Include="app\services\language.service.js" />
     <Content Include="app\services\level.service.js" />
@@ -156,7 +144,6 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\custom.css" />
-    <Content Include="Content\image\icon_image.jpg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="index.html" />
     <Content Include="packages.config" />
