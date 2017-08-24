@@ -19,8 +19,6 @@
     function SyllabusCreateController($state, $scope, tradeService, levelService,
         languageService, fileuploadservice, syllabusService, pagerService, logger) {
       
-        $scope.myName = "Rizwanur Rahman Rumi";
-
         $scope.tradeList = [];
         $scope.levelList = [];
         $scope.languageList = [];
